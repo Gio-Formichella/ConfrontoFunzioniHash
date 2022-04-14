@@ -16,7 +16,9 @@ class DivHashTable:
         self.T[pos].add(key)
 
     def div_hash_remove(self, key):
-        pass
+        pos = self.div_hash_function(key)
+        return self.T[pos].remove(key)
 
     def div_hash_search(self, key):
-        pass
+        pos = self.div_hash_function(key)
+        return self.T[pos].search(key)
