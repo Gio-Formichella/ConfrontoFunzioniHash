@@ -34,8 +34,7 @@ class LinkedList:
 
     def print_l(self):
         current = self.head
-        previous = None
-        while current != None:
+        while current is not None:
             print("..", current.get_data())
             current = current.get_next()
 
@@ -43,13 +42,17 @@ class LinkedList:
         current = self.head
         previous = None
         found = False
-        while not found:
+        while not found and current is not None:
             if current.get_data() == item:
                 found = True
             else:
                 previous = current
                 current = current.get_next()
-        if previous == None:
-            self.head = current.get_next()
-        else:
-            previous.set_next(current.get_next())
+
+        if found:
+            if previous is None:
+                self.head = current.get_next()
+            else:
+                previous.set_next(current.get_next())
+
+        return found
