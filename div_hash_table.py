@@ -8,6 +8,9 @@ class DivHashTable:
         for i in range(0, m):
             self.T.append(LinkedList())
 
+    def div_hash_function(self, key):
+        return key % self.m
+
     def div_hash_insert(self, key):
         pass
 
