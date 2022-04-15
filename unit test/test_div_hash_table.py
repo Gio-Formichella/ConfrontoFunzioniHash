@@ -16,18 +16,21 @@ class TestDivHashTable(unittest.TestCase):
         self.table = DivHashTable(13)
 
     def test_div_hash_function(self):
-        self.assertEqual(self.table.div_hash_function(4), 4 % self.table.m)
-        self.assertEqual(self.table.div_hash_function(13), 13 % self.table.m)
-        self.assertEqual(self.table.div_hash_function(24), 24 % self.table.m)
+        key1 = 4
+        key2 = 13
+        key3 = 24
+        self.assertEqual(self.table.div_hash_function(key1), key1 % self.table.m)
+        self.assertEqual(self.table.div_hash_function(key2), key2 % self.table.m)
+        self.assertEqual(self.table.div_hash_function(key3), key3 % self.table.m)
 
     def test_div_hash_insert(self):
         key = 7
-        self.table.div_hash_insert(7)
+        self.table.div_hash_insert(key)
 
         self.assertTrue(self.table.T[self.table.div_hash_function(key)].search(key))
 
         key2 = 12
-        key3 = 12 * self.table.m
+        key3 = 12 + self.table.m
         self.table.div_hash_insert(key2)
         self.table.div_hash_insert(key3)
 
@@ -48,8 +51,8 @@ class TestDivHashTable(unittest.TestCase):
 
     def test_div_hash_search(self):
         key1 = 5
-        key2 = 5 * self.table.m
-        key3 = 5 * self.table.m * 2
+        key2 = 5 + self.table.m
+        key3 = 5 + self.table.m * 2
 
         self.table.div_hash_insert(key1)
         self.table.div_hash_insert(key2)
