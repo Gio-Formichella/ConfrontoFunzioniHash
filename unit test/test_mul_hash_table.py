@@ -69,6 +69,11 @@ class TestMulHashTable(unittest.TestCase):
         self.assertFalse(self.table.mul_hash_search(key2))
         self.assertFalse(self.table.mul_hash_search(key1+1))
 
+    def test_get_load_factor(self):
+        self.assertEqual(self.table.get_load_factor(), 0)
+
+        self.table.mul_hash_insert(4)
+        self.assertEqual(self.table.get_load_factor(), 1 / self.table.m)
 
 if __name__ == '__main__':
     unittest.main()
