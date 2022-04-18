@@ -73,3 +73,12 @@ class TestDivHashTable(unittest.TestCase):
 
         self.table.div_hash_insert(4)
         self.assertEqual(self.table.get_load_factor(), 1 / self.table.m)
+
+    def test_get_collision_number(self):
+        self.assertEqual(self.table.get_collision_number(), 0)
+
+        self.table.div_hash_insert(4)
+        self.assertEqual(self.table.get_collision_number(), 0)
+
+        self.table.div_hash_insert(4)
+        self.assertEqual(self.table.get_collision_number(), 1)

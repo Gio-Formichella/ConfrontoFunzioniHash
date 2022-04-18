@@ -75,5 +75,15 @@ class TestMulHashTable(unittest.TestCase):
         self.table.mul_hash_insert(4)
         self.assertEqual(self.table.get_load_factor(), 1 / self.table.m)
 
+    def test_get_collision_number(self):
+        self.assertEqual(self.table.get_collision_number(), 0)
+
+        self.table.mul_hash_insert(4)
+        self.assertEqual(self.table.get_collision_number(), 0)
+
+        self.table.mul_hash_insert(4)
+        self.assertEqual(self.table.get_collision_number(), 1)
+
+
 if __name__ == '__main__':
     unittest.main()
