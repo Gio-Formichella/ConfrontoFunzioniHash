@@ -23,6 +23,8 @@ for dim in dimensions:
         mul_table = MulHashTable(dim)
 
         keys = []
+        div_test_result = []  # used for pickling test result
+        mul_test_result = []  # used for pickling test result
 
         for i in range(0, inserted_keys):
             key = np.random.randint(u_min, u_max + 1)
@@ -33,14 +35,18 @@ for dim in dimensions:
             end = timer()
             div_time += end - start
             collision_div_counter[i] += div_table.get_collision_number()
+            div_test_result.append([end-start, div_table.get_collision_number()])
 
             start = timer()
             mul_table.mul_hash_insert(key)
             end = timer()
             mul_time += end - start
             collision_mul_counter[i] += mul_table.get_collision_number()
+            mul_test_result.append([end-start, mul_table.get_collision_number()])
 
         pickle.dump(keys, open("results/insertion/test" + str(test) + "_m=" + str(dim) + "_keys.p", "wb"))
+        pickle.dump(div_test_result, open("results/insertion/div_test"+str(test)+"_m="+str(dim)+"_result.p", "wb"))
+        pickle.dump(mul_test_result, open("results/insertion/mul_test"+str(test)+"_m="+str(dim)+"_result.p", "wb"))
 
     exec_time = {
         "DivHashTable": div_time / (inserted_keys * n_tests) * 1000000,
