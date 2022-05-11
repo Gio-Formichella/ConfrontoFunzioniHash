@@ -11,91 +11,51 @@ u_min = 0
 u_max = 99
 a_max = 2  # max load factor
 
-# results list threw all tests
-div_table_results = []
-mul_table_results = []
+for dim in dimensions:
+    div_time = 0  # stores total insertion run time for div_hash_insert()
+    mul_time = 0  # stores total insertion run time for mul_hash_insert()
+    inserted_keys = math.floor(a_max * dim)  # number of input keys
+    collision_div_counter = np.zeros((inserted_keys, 1))  # collision_div_counter[i] = total number of collision up to i-th insertion
+    collision_mul_counter = np.zeros((inserted_keys, 1))  # collision_mul_counter[i] = total number of collision up to i-th insertion
 
-for test in range(0, n_tests):
-    div_tables = []  # list of DivHashTables
-    mul_tables = []  # list of MulHashTables
-    keys = []  # keeps track inserted keys
+    for test in range(0, n_tests):
+        div_table = DivHashTable(dim)
+        mul_table = MulHashTable(dim)
 
-    div_tables_performance = []
-    mul_tables_performance = []
+        keys = []
 
-    for dim in dimensions:
-        div_tables.append(DivHashTable(dim))
-        mul_tables.append(MulHashTable(dim))
-        # dictionaries will hold test results: { load factor : [exec_time , collision number] }
-        div_result_dict = {}
-        mul_result_dict = {}
-        div_tables_performance.append(div_result_dict)
-        mul_tables_performance.append(mul_result_dict)
+        for i in range(0, inserted_keys):
+            key = np.random.randint(u_min, u_max + 1)
+            keys.append(key)
 
-    ongoing = True
-    # testing insertion
-    while ongoing:
-        key = np.random.randint(u_min, u_max + 1)  # key from key universe
-        keys.append(key)
-        ongoing = False
+            start = timer()
+            div_table.div_hash_insert(key)
+            end = timer()
+            div_time += end - start
+            collision_div_counter[i] += div_table.get_collision_number()
 
-        # testing DivHashTables
-        for i in range(0, len(div_tables)):
-            a = div_tables[i].get_load_factor()
-            if a < a_max:  # insertion up to load factor
-                start = timer()
-                div_tables[i].div_hash_insert(key)
-                end = timer()
+            start = timer()
+            mul_table.mul_hash_insert(key)
+            end = timer()
+            mul_time += end - start
+            collision_mul_counter[i] += mul_table.get_collision_number()
 
-                collisions = div_tables[i].get_collision_number()
-                div_tables_performance[i][a] = [end - start,
-                                                collisions]  # adding result to correct dictionary from list
+        pickle.dump(keys, open("results/insertion/test" + str(test) + "_m=" + str(dim) + "_keys.p", "wb"))
 
-                ongoing = True
+    exec_time = {
+        "DivHashTable": div_time / (inserted_keys * n_tests) * 1000000,
+        "MulHashTable": mul_time / (inserted_keys * n_tests) * 1000000
+    }
+    pickle.dump(exec_time, open("results/insertion/average_insertion_time_div_method_m="+str(dim), "wb"))
 
-        # testing MulHashTable
-        for i in range(0, len(mul_tables)):
-            a = mul_tables[i].get_load_factor()
-            if a < a_max:  # insertion up to load factor
-                start = timer()
-                mul_tables[i].mul_hash_insert(key)
-                end = timer()
+    # average collision number
+    averaged_div_lf_to_collision = {}  # {load factor : collisions}
+    averaged_mul_lf_to_collision = {}  # {load factor : collisions}
+    for i in range(0, inserted_keys):
+        collision_div_counter[i] = collision_div_counter[i]/n_tests
+        collision_mul_counter[i] = collision_mul_counter[i]/n_tests
 
-                collisions = mul_tables[i].get_collision_number()
-                mul_tables_performance[i][a] = [end - start,
-                                                collisions]  # adding result to correct dictionary from list
-
-                ongoing = True
-
-    # adding performance to performances list
-    div_table_results.append(div_tables_performance)
-    mul_table_results.append(mul_tables_performance)
-
-    for i in range(0, len(div_tables_performance)):
-        pickle.dump(keys, open("results/insertion/test" + str(test + 1) + "_keys.p"))
-        pickle.dump(div_tables_performance[i], open(
-            "results/insertion/test" + str(test + 1) + "_DivHashTable_insertion_m=" + str(dimensions[i]) + "_results.p",
-            "wb"))
-        pickle.dump(mul_tables_performance[i], open(
-            "results/insertion/test" + str(test + 1) + "_MulHashTable_insertion_m=" + str(dimensions[i]) + "_results.p",
-            "wb"))
-
-# average insertion run time
-div_ins_time_sum = 0
-div_ins_number = 0
-mul_ins_time_sum = 0
-mul_ins_number = 0
-
-for i in range(0, n_tests):
-    for j in range(0, len(div_table_results[i])):
-        div_ins_time_sum += div_table_results[i][j][1][0]  # accessing exec_time, results[test[table[list[exec_time]]]]
-        div_ins_number += 1
-    for j in range(0, len(mul_table_results[i])):
-        mul_ins_time_sum += mul_table_results[i][j][1][0]  # accessing exec_time, results[test[table[list[exec_time]]]]
-        mul_ins_number += 1
-
-time_result = {
-    "DivHashTable": div_ins_time_sum / div_ins_number * 1000000,  # value in micro seconds
-    "MulHashTable": mul_ins_time_sum / mul_ins_number * 1000000  # value in micro seconds
-}
-pickle.dump(time_result, open("average_insertion_time.p", "wb"))
+        averaged_div_lf_to_collision[i/dim] = collision_div_counter[i]
+        averaged_mul_lf_to_collision[i/dim] = collision_mul_counter[i]
+    pickle.dump(averaged_div_lf_to_collision, open("results/insertion/div_averaged_collisions_m="+str(dim)+".p", "wb"))
+    pickle.dump(averaged_mul_lf_to_collision, open("results/insertion/mul_averaged_collisions_m="+str(dim)+".p", "wb"))
