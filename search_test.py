@@ -1,5 +1,4 @@
 import pickle
-
 import numpy as np
 from timeit import default_timer as timer
 from div_hash_table import *
@@ -22,7 +21,7 @@ for ld in a_factor:
     mul_unsuc_results = []
     searched_keys = []
     while div_table.get_load_factor() < ld:  # inserting up to load factor
-        key = np.random.randint(u_min, u_max+1)
+        key = np.random.randint(u_min, u_max + 1)
         keys.append(key)
         div_table.div_hash_insert(key)
         mul_table.mul_hash_insert(key)
@@ -56,4 +55,11 @@ for ld in a_factor:
         searched_keys.append(present_key)
         searched_keys.append(absent_key)
 
-    pickle.dump(searched_keys, open("results/search/searched_keys_ld="+str(ld)+".p", "wb"))
+    # storing results
+    pickle.dump(searched_keys, open("results/search/searched_keys_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(div_suc_results, open("results/search/div_suc_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(mul_suc_results, open("results/search/mul_suc_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(div_unsuc_results, open("results/search/div_unsuc_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(mul_unsuc_results, open("results/search/div_unsuc_results_ld=" + str(ld) + ".p", "wb"))
+
+pickle.dump(keys, open("results/search/keys.p", "wb"))
