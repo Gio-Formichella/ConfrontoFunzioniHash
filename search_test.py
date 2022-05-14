@@ -60,6 +60,6 @@ for ld in a_factor:
     pickle.dump(div_suc_results, open("results/search/div_suc_results_ld=" + str(ld) + ".p", "wb"))
     pickle.dump(mul_suc_results, open("results/search/mul_suc_results_ld=" + str(ld) + ".p", "wb"))
     pickle.dump(div_unsuc_results, open("results/search/div_unsuc_results_ld=" + str(ld) + ".p", "wb"))
-    pickle.dump(mul_unsuc_results, open("results/search/div_unsuc_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(mul_unsuc_results, open("results/search/mul_unsuc_results_ld=" + str(ld) + ".p", "wb"))
 
 pickle.dump(keys, open("results/search/keys.p", "wb"))
