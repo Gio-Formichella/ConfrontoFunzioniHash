@@ -45,8 +45,8 @@ for ld in a_factor:
         div_table.div_hash_insert(key)
         mul_table.mul_hash_insert(key)
 
-    pickle.dump(div_remove_results, open("results/removal/div_remove_results_ld="+str(ld)+".p", "wb"))
-    pickle.dump(mul_remove_results, open("results/removal/mul_remove_results_ld="+str(ld)+".p", "wb"))
-    pickle.dump(deleted_keys, open("results/removal/deleted_keys_ld="+str(ld)+".p", "wb"))
+    pickle.dump(div_remove_results, open("results/removal/div_remove_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(mul_remove_results, open("results/removal/mul_remove_results_ld=" + str(ld) + ".p", "wb"))
+    pickle.dump(deleted_keys, open("results/removal/deleted_keys_ld=" + str(ld) + ".p", "wb"))
 
 pickle.dump(keys, open("results/removal/keys.p", "wb"))
