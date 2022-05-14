@@ -16,7 +16,7 @@ class TestMulHashTable(unittest.TestCase):
         self.table = MulHashTable(13)
         self.a = (math.sqrt(5)-1)/2  # Knuth's suggested A value
 
-    def test_mul_hash_funtion(self):
+    def test_mul_hash_function(self):
         key1 = 4
         key2 = 13
         key3 = 24
