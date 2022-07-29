@@ -27,7 +27,7 @@ class TestDivHashTable(unittest.TestCase):
         key = 7
         col = self.table.div_hash_insert(key)
 
-        self.assertEqual(col, 0)
+        self.assertFalse(col)
         self.assertTrue(self.table.T[self.table.div_hash_function(key)].search(key))
 
         key2 = 12
@@ -35,7 +35,7 @@ class TestDivHashTable(unittest.TestCase):
         self.table.div_hash_insert(key2)
 
         col = self.table.div_hash_insert(key3)
-        self.assertEqual(col, 1)
+        self.assertTrue(col)
 
         self.assertTrue(self.table.T[self.table.div_hash_function(key2)].search(key2))
         self.assertTrue(self.table.T[self.table.div_hash_function(key3)].search(key3))

@@ -14,7 +14,8 @@ class DivHashTable:
     def div_hash_insert(self, key):
         pos = self.div_hash_function(key)
         self.T[pos].add(key)
-        return self.T[pos].size() - 1  # returns number of collisions
+        if self.T[pos].size() != 1:
+            return True  # there was a collision
 
     def div_hash_remove(self, key):
         pos = self.div_hash_function(key)
