@@ -31,12 +31,3 @@ class MulHashTable:
         for linkedlist in self.T:
             n += linkedlist.size()
         return n / self.m
-
-    def get_collision_number(self):
-        collisions = 0
-        for linkedlist in self.T:
-            size = linkedlist.size()
-            if size > 1:
-                collisions += size - 1
-
-        return collisions
