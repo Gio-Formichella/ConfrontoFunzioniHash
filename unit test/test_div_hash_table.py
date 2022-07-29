@@ -63,13 +63,14 @@ class TestDivHashTable(unittest.TestCase):
         self.table.div_hash_insert(key1)
         self.table.div_hash_insert(key1)
 
-        self.assertTrue(self.table.div_hash_search(key1))
-        self.assertTrue(self.table.div_hash_search(key2))
-        self.assertTrue(self.table.div_hash_search(key3))
+        self.assertTrue(self.table.div_hash_search(key1)[0])
+        self.assertEqual(self.table.div_hash_search(key3)[1], 3)
+        self.assertTrue(self.table.div_hash_search(key2)[0])
+        self.assertTrue(self.table.div_hash_search(key3)[0])
 
         self.table.div_hash_remove(key2)
-        self.assertFalse(self.table.div_hash_search(key2))
-        self.assertFalse(self.table.div_hash_search(key1 + 1))
+        self.assertFalse(self.table.div_hash_search(key2)[0])
+        self.assertFalse(self.table.div_hash_search(key1 + 1)[0])
 
     def test_get_load_factor(self):
         self.assertEqual(self.table.get_load_factor(), 0)

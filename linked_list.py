@@ -22,15 +22,17 @@ class LinkedList:
             current = current.get_next()
         return count
 
-    def search(self, item):
+    def search(self, item):  # returns if item is found or not and number of inspected items
         current = self.head
         found = False
+        inspected = 0  # number of examined items
         while current is not None and not found:
+            inspected += 1
             if current.get_data() == item:
                 found = True
             else:
                 current = current.get_next()
-        return found
+        return found, inspected
 
     def print_l(self):
         current = self.head
