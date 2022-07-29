@@ -60,3 +60,32 @@ def insertion_test():
         pickle.dump(keys, open("results/insertion/keys_dim=" + str(dim) + ".p", "wb"))
         pickle.dump(mul_collisions, open("results/insertion/mul_collisions_dim=" + str(dim) + ".p", "wb"))
         pickle.dump(div_collisions, open("results/insertion/div_collisions_dim=" + str(dim) + ".p", "wb"))
+
+
+def search_test():
+    for dim in table_dim:
+        keys = np.random.randint(0, 9999, dim * 2)  # U = [0,9999], max load factor = 2
+
+        mul_table = MulHashTable(dim)
+        div_table = DivHashTable(dim)
+
+        # stores average number of inspected items for different table sizes
+        mul_inspected = {}
+        div_inspected = {}
+        for i in range(0, len(keys)):
+            key = keys[i]
+            mul_table.mul_hash_insert(key)
+            div_table.div_hash_insert(key)
+
+            if (i + 1) % 50 == 0:  # counting average number of items inspected by search() every 50 new insertions
+                mul_counter = 0
+                div_counter = 0
+                for j in range(0, i + 1):
+                    mul_counter += mul_table.mul_hash_search(keys[j])[1]  # returns number of inspected items
+                    div_counter += div_table.div_hash_search(keys[j])[1]  # returns number of inspected items
+                mul_inspected[i + 1] = mul_counter / (i + 1)
+                div_inspected[i + 1] = div_counter / (i + 1)
+
+        pickle.dump(keys, open("results/search/keys_dim=" + str(dim) + ".p", "wb"))
+        pickle.dump(mul_inspected, open("results/search/mul_inspected_dim=" + str(dim) + ".p", "wb"))
+        pickle.dump(div_inspected, open("results/search/div_inspected_dim=" + str(dim) + ".p", "wb"))
