@@ -48,9 +48,9 @@ class TestDivHashTable(unittest.TestCase):
         self.table.div_hash_insert(key2)
         self.table.div_hash_insert(key2)
 
-        self.assertTrue(self.table.div_hash_remove(key))
-        self.assertTrue(self.table.div_hash_remove(key2))
-        self.assertFalse(self.table.div_hash_remove(0))
+        self.assertTrue(self.table.div_hash_remove(key)[0])
+        self.assertTrue(self.table.div_hash_remove(key2)[0])
+        self.assertFalse(self.table.div_hash_remove(0)[0])
 
     def test_div_hash_search(self):
         key1 = 5
