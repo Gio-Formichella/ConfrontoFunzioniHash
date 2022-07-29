@@ -34,17 +34,13 @@ class LinkedList:
                 current = current.get_next()
         return found, inspected
 
-    def print_l(self):
-        current = self.head
-        while current is not None:
-            print("..", current.get_data())
-            current = current.get_next()
-
-    def remove(self, item):
+    def remove(self, item):  # also returns number of inspected elements
         current = self.head
         previous = None
         found = False
+        inspected = 0
         while not found and current is not None:
+            inspected += 1
             if current.get_data() == item:
                 found = True
             else:
@@ -57,4 +53,4 @@ class LinkedList:
             else:
                 previous.set_next(current.get_next())
 
-        return found
+        return found, inspected
