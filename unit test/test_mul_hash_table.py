@@ -48,9 +48,9 @@ class TestMulHashTable(unittest.TestCase):
         self.table.mul_hash_insert(key2)
         self.table.mul_hash_insert(key2)
 
-        self.assertTrue(self.table.mul_hash_remove(key))
-        self.assertTrue(self.table.mul_hash_remove(key2))
-        self.assertFalse(self.table.mul_hash_remove(0))
+        self.assertTrue(self.table.mul_hash_remove(key)[0])
+        self.assertTrue(self.table.mul_hash_remove(key2)[0])
+        self.assertFalse(self.table.mul_hash_remove(0)[0])
 
     def test_div_hash_search(self):
         key1 = 5
@@ -64,7 +64,6 @@ class TestMulHashTable(unittest.TestCase):
         self.table.mul_hash_insert(key1)
 
         self.assertTrue(self.table.mul_hash_search(key1)[0])
-        self.assertEqual(self.table.mul_hash_search(key3)[1], 3)
         self.assertTrue(self.table.mul_hash_search(key2)[0])
         self.assertTrue(self.table.mul_hash_search(key3)[0])
 
