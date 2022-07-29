@@ -81,7 +81,7 @@ def search_test():
             # calculating average number of items inspected searching every key
             mul_counter = 0
             div_counter = 0
-            for j in range(0, i):
+            for j in range(0, i+1):
                 mul_counter += mul_table.mul_hash_search(keys[j])[1]  # returns number of inspected items
                 div_counter += div_table.div_hash_search(keys[j])[1]  # returns number of inspected items
 
