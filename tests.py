@@ -77,7 +77,7 @@ def search_test():
             mul_table.mul_hash_insert(keys[i])
             div_table.div_hash_insert(keys[i])
 
-            if (i + 1) % 50 == 0:
+            if i % 50 == 0:
                 # calculating average number of items inspected searching every key in tables
                 mul_counter = 0
                 div_counter = 0
