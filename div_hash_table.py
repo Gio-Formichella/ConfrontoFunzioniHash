@@ -24,9 +24,3 @@ class DivHashTable:
     def div_hash_search(self, key):
         pos = self.div_hash_function(key)
         return self.T[pos].search(key)
-
-    def get_load_factor(self):
-        n = 0
-        for linkedlist in self.T:
-            n += linkedlist.size()
-        return n / self.m
