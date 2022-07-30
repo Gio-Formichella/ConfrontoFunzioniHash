@@ -26,7 +26,6 @@ y2 = list(mul_collisions.values())
 plt.figure()
 plt.plot(x1, y1, 'r', label="DivHashTable")
 plt.plot(x2, y2, 'orange', label="MulHashTable")
-plt.ylabel("collisions")
 plt.legend()
 
 div_collisions = pickle.load(open("results/insertion/div_collisions_dim=2053.p", "rb"))
@@ -38,7 +37,6 @@ y2 = list(mul_collisions.values())
 plt.figure()
 plt.plot(x1, y1, 'r', label="DivHashTable")
 plt.plot(x2, y2, 'orange', label="MulHashTable")
-plt.ylabel("collisions")
 plt.legend()
 
 # search plot
