@@ -49,7 +49,7 @@ def insertion_test():
         for i in range(0, len(keys)):
             if mul_table.mul_hash_insert(keys[i]):  # if there was a collision
                 mul_col_counter += 1
-            if div_table.div_hash_insert(keys[i]):  # if there was a collission
+            if div_table.div_hash_insert(keys[i]):  # if there was a collision
                 div_col_counter += 1
             # calculating average number of collisions every 50 insertions
             if (i + 1) % 50 == 0:
@@ -74,9 +74,8 @@ def search_test():
         mul_inspected = {}
         div_inspected = {}
         for i in range(0, len(keys)):
-            key = keys[i]
-            mul_table.mul_hash_insert(key)
-            div_table.div_hash_insert(key)
+            mul_table.mul_hash_insert(keys[i])
+            div_table.div_hash_insert(keys[i])
 
             # calculating average number of items inspected searching every key
             mul_counter = 0
@@ -91,3 +90,29 @@ def search_test():
         pickle.dump(keys, open("results/search/keys_dim=" + str(dim) + ".p", "wb"))
         pickle.dump(mul_inspected, open("results/search/mul_inspected_dim=" + str(dim) + ".p", "wb"))
         pickle.dump(div_inspected, open("results/search/div_inspected_dim=" + str(dim) + ".p", "wb"))
+
+
+def remove_test():
+    for dim in table_dim:
+        keys = np.random.randint(0, 9999, dim * 2)  # U = [0,9999], max load factor = 2
+
+        mul_inspected = {}
+        div_inspected = {}
+        mul_table = MulHashTable(dim)
+        div_table = DivHashTable(dim)
+        for i in range(0, len(keys), 50):  # testing removal every 50 new insertions
+            for j in range(0, i+1):
+                mul_table.mul_hash_insert(keys[j])
+                div_table.div_hash_insert(keys[j])
+
+            mul_counter = 0
+            div_counter = 0
+            for j in range(0, i+1):
+                mul_counter += mul_table.mul_hash_remove(keys[j])[1]  # returns inspected items
+                div_counter += div_table.div_hash_remove(keys[j])[1]  # returns inspected items
+            # storing average number of inspected elements to remove i keys
+            mul_inspected[i] = mul_counter/(i+1)
+            div_inspected[i] = div_counter/(i+1)
+        pickle.dump(keys, open("results/removal/keys_dim=" + str(dim) + ".p", "wb"))
+        pickle.dump(mul_inspected, open("results/removal/mul_inspected_dim=" + str(dim) + ".p", "wb"))
+        pickle.dump(div_inspected, open("results/removal/div_inspected_dim=" + str(dim) + ".p", "wb"))
