@@ -4,10 +4,8 @@ from div_hash_table import *
 from mul_hash_table import *
 import pickle
 
-table_dim = [2048, 2053]
 
-
-def hash_function_test():  # testing average hash function execution time
+def hash_function_test(table_dim):  # testing average hash function execution time
     div_function_time = 0
     mul_function_time = 0
 
@@ -34,7 +32,7 @@ def hash_function_test():  # testing average hash function execution time
     pickle.dump(result, open("results/hash_function/hash_function_result.p", "wb"))
 
 
-def insertion_test():
+def insertion_test(table_dim):
     for dim in table_dim:
         keys = np.random.randint(0, 9999, dim * 4)  # U = [0,9999], max load factor = 4
 
@@ -63,7 +61,7 @@ def insertion_test():
         pickle.dump(div_collisions, open("results/insertion/div_collisions_dim=" + str(dim) + ".p", "wb"))
 
 
-def search_test():
+def search_test(table_dim):
     for dim in table_dim:
         keys = np.random.randint(0, 9999, dim * 2)  # U = [0,9999], max load factor = 2
 
@@ -93,7 +91,7 @@ def search_test():
         pickle.dump(div_inspected, open("results/search/div_inspected_dim=" + str(dim) + ".p", "wb"))
 
 
-def remove_test():
+def remove_test(table_dim):
     for dim in table_dim:
         keys = np.random.randint(0, 9999, dim * 2)  # U = [0,9999], max load factor = 2
 
